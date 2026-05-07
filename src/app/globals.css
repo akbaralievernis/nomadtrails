@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", sans-serif;
+}
+
 @layer base {
   :root {
     --primary: #1a3d2b;
@@ -66,8 +71,6 @@
   }
 }
 
-.font-playfair { font-family: 'Playfair Display', serif; }
-.font-inter { font-family: 'Inter', sans-serif; }
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

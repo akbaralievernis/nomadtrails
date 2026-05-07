@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CheckCircle, XCircle, Clock, Trash2 } from "lucide-react";
+import { CheckCircle, XCircle, Calendar, Clock } from "lucide-react";
 
 export default function AdminBookingTable({ initialBookings, translations }: { initialBookings: any[], translations: any }) {
   const [bookings, setBookings] = useState(initialBookings);
