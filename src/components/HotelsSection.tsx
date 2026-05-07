@@ -31,7 +31,7 @@ export default function HotelsSection() {
   }, []);
 
   return (
-    <section id="hotels" style={{ padding: "7rem 2rem", background: "#fff" }}>
+    <section id="hotels" className="section-padding" style={{ background: "#fff" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div ref={headRef} style={{ textAlign: "center", marginBottom: "4rem" }}>
           <span className="section-badge">{t("title")}</span>
@@ -39,7 +39,7 @@ export default function HotelsSection() {
           <p className="section-subtitle" style={{ margin: "0.75rem auto 0" }}>{t("subtitle")}</p>
         </div>
 
-        <div ref={gridRef} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))", gap: "2rem" }}>
+        <div ref={gridRef} className="responsive-grid">
           {HOTELS.map((hotel) => (
             <article key={hotel.id} className="card-hover" style={{ borderRadius: 20, overflow: "hidden", background: "#fff", boxShadow: "0 4px 30px rgba(0,0,0,0.07)", border: "1px solid rgba(0,0,0,0.04)" }}>
               <div style={{ position: "relative", height: 210, overflow: "hidden" }}>
@@ -50,7 +50,7 @@ export default function HotelsSection() {
                   {t(hotel.type as "type_yurt" | "type_lodge" | "type_hotel" | "type_guesthouse")}
                 </div>
               </div>
-              <div style={{ padding: "1.5rem" }}>
+              <div className="card-content" style={{ padding: "clamp(1.25rem, 4vw, 1.75rem)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
                   <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.15rem", fontWeight: 700, color: "#0d1117" }}>{hotel.name}</h3>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", flexShrink: 0 }}>

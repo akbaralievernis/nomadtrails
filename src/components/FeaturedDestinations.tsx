@@ -39,26 +39,26 @@ export default function FeaturedDestinations() {
   }, [active]);
 
   return (
-    <section ref={sectionRef} id="destinations" style={{ padding: "7rem 2rem", background: "#fff" }}>
+    <section ref={sectionRef} id="destinations" className="section-padding" style={{ background: "#fff" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div ref={headRef} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", marginBottom: "3rem" }}>
-          <div>
+          <div style={{ flex: "1 1 300px" }}>
             <span className="section-badge">{t("title")}</span>
             <h2 className="section-title">{t("title")}</h2>
             <p className="section-subtitle" style={{ marginTop: "0.75rem" }}>{t("subtitle")}</p>
           </div>
 
           {/* Filter Pills */}
-          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <div className="mobile-scroll-container" style={{ display: "flex", gap: "0.6rem", overflowX: "auto", paddingBottom: "0.5rem", scrollbarWidth: "none", msOverflowStyle: "none" }}>
             {FILTERS.map((f, i) => (
-              <button key={f} onClick={() => setActive(FILTER_VALUES[i])} style={{ padding: "0.5rem 1.2rem", borderRadius: 999, border: "none", cursor: "pointer", fontSize: "0.82rem", fontWeight: 600, transition: "all 0.25s", background: active === FILTER_VALUES[i] ? "#1a3d2b" : "#f0f0f0", color: active === FILTER_VALUES[i] ? "#fff" : "#6c757d" }}>
+              <button key={f} onClick={() => setActive(FILTER_VALUES[i])} style={{ padding: "0.6rem 1.4rem", borderRadius: 999, border: "none", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600, transition: "all 0.25s", background: active === FILTER_VALUES[i] ? "#1a3d2b" : "#f0f0f0", color: active === FILTER_VALUES[i] ? "#fff" : "#6c757d", whiteSpace: "nowrap" }}>
                 {t(f as "filter_all" | "filter_mountains" | "filter_lakes" | "filter_history" | "filter_canyons")}
               </button>
             ))}
           </div>
         </div>
 
-        <div ref={gridRef} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "2rem" }}>
+        <div ref={gridRef} className="responsive-grid">
           {filtered.map((dest) => (
             <article key={dest.id} className="card-hover" style={{ borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 30px rgba(0,0,0,0.07)", border: "1px solid rgba(0,0,0,0.04)", background: "#fff" }}>
               <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
@@ -69,7 +69,7 @@ export default function FeaturedDestinations() {
                   {dest.category}
                 </div>
               </div>
-              <div style={{ padding: "1.5rem" }}>
+              <div className="card-content" style={{ padding: "clamp(1.25rem, 4vw, 2rem)" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#6c757d", fontSize: "0.8rem", marginBottom: "0.5rem" }}>
                   <MapPin size={12} /><span>{dest.region}</span>
                 </div>

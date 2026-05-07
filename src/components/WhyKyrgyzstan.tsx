@@ -28,7 +28,7 @@ export default function WhyKyrgyzstan() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="why" style={{ padding: "7rem 2rem", background: "#f8f9fa" }}>
+    <section ref={sectionRef} id="why" className="section-padding" style={{ background: "#f8f9fa" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div ref={headRef} style={{ textAlign: "center", marginBottom: "4rem" }}>
           <span className="section-badge">{t("title")}</span>
@@ -36,9 +36,9 @@ export default function WhyKyrgyzstan() {
           <p className="section-subtitle" style={{ margin: "0 auto", textAlign: "center" }}>{t("subtitle")}</p>
         </div>
 
-        <div ref={cardsRef} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "2rem" }}>
+        <div ref={cardsRef} className="responsive-grid">
           {ITEMS.map(({ key, icon: Icon, color }) => (
-            <div key={key} className="card-hover" style={{ background: "#fff", borderRadius: 20, padding: "2.5rem 2rem", boxShadow: "0 4px 24px rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.04)", position: "relative", overflow: "hidden" }}>
+            <div key={key} className="card-hover" style={{ background: "#fff", borderRadius: 20, padding: "clamp(1.5rem, 5vw, 2.5rem) clamp(1.25rem, 4vw, 2rem)", boxShadow: "0 4px 24px rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.04)", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: -20, right: -20, width: 100, height: 100, borderRadius: "50%", background: `${color}10` }} />
               <div style={{ width: 52, height: 52, borderRadius: 14, background: `${color}15`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.5rem" }}>
                 <Icon size={24} color={color} />

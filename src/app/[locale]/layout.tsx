@@ -20,6 +20,8 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+import BackgroundMusic from "@/components/BackgroundMusic";
+
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
@@ -42,6 +44,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="font-inter antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}
+          <BackgroundMusic />
         </NextIntlClientProvider>
       </body>
     </html>

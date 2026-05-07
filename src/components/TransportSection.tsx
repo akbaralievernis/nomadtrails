@@ -72,7 +72,7 @@ export default function TransportSection() {
   }, []);
 
   return (
-    <section id="transport" style={{ padding: "7rem 2rem", background: "#f8f9fa" }}>
+    <section id="transport" className="section-padding" style={{ background: "#f8f9fa" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div ref={headRef} style={{ textAlign: "center", marginBottom: "4rem" }}>
           <span className="section-badge">{t("title")}</span>
@@ -80,11 +80,11 @@ export default function TransportSection() {
           <p className="section-subtitle" style={{ margin: "0.75rem auto 0" }}>{t("subtitle")}</p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Info Cards */}
           <div ref={cardsRef} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             {CARDS.map(({ key, icon: Icon, color }) => (
-              <div key={key} className="card-hover" style={{ display: "flex", gap: "1.25rem", background: "#fff", borderRadius: 16, padding: "1.5rem", boxShadow: "0 4px 20px rgba(0,0,0,0.06)", border: "1px solid rgba(0,0,0,0.04)" }}>
+              <div key={key} className="card-hover" style={{ display: "flex", gap: "1.25rem", background: "#fff", borderRadius: 16, padding: "clamp(1rem, 4vw, 1.5rem)", boxShadow: "0 4px 20px rgba(0,0,0,0.06)", border: "1px solid rgba(0,0,0,0.04)" }}>
                 <div style={{ width: 48, height: 48, borderRadius: 14, background: `${color}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <Icon size={22} color={color} />
                 </div>
@@ -120,12 +120,6 @@ export default function TransportSection() {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @media(max-width: 768px) {
-          #transport > div > div:last-child { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   );
 }

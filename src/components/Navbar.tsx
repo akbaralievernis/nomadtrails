@@ -52,10 +52,10 @@ export default function Navbar() {
         background: scrolled ? "rgba(255,255,255,0.95)" : "transparent",
         backdropFilter: scrolled ? "blur(16px)" : "none",
         boxShadow: scrolled ? "0 2px 30px rgba(0,0,0,0.08)" : "none",
-        padding: scrolled ? "0.75rem 0" : "1.5rem 0",
+        padding: scrolled ? "1rem 0" : "1.5rem 0",
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(1.25rem, 5vw, 2.5rem)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         {/* Logo */}
         <Link href={`/${currentLocale}`} style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
           <div style={{ width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -113,27 +113,31 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {menuOpen && (
-        <div style={{ position: "fixed", inset: 0, top: 70, background: "rgba(255,255,255,0.98)", backdropFilter: "blur(16px)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.5rem", zIndex: 999 }}>
+        <div style={{ position: "fixed", inset: 0, top: scrolled ? 64 : 88, background: "rgba(255,255,255,0.98)", backdropFilter: "blur(20px)", padding: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem", zIndex: 999, overflowY: "auto" }}>
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", fontSize: "1.4rem", fontFamily: "'Playfair Display',serif", fontWeight: 600, color: "#1a3d2b", borderBottom: "1px solid #e9ecef", paddingBottom: "1rem" }}>
+            <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)} style={{ textDecoration: "none", fontSize: "1.25rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#1a3d2b", borderBottom: "1px solid rgba(0,0,0,0.05)", paddingBottom: "1rem" }}>
               {link.label}
             </a>
           ))}
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "1rem" }}>
+          <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginTop: "1rem" }}>
             {LOCALES.map((l) => (
-              <button key={l.code} onClick={() => { switchLocale(l.code); setMenuOpen(false); }} style={{ padding: "0.5rem 1rem", borderRadius: 999, border: `2px solid ${l.code === currentLocale ? "#1a3d2b" : "#e9ecef"}`, background: l.code === currentLocale ? "#1a3d2b" : "transparent", color: l.code === currentLocale ? "#fff" : "#343a40", cursor: "pointer", fontWeight: 600, fontSize: "0.82rem" }}>
+              <button key={l.code} onClick={() => { switchLocale(l.code); setMenuOpen(false); }} style={{ padding: "0.5rem 1rem", borderRadius: 999, border: `1.5px solid ${l.code === currentLocale ? "#1a3d2b" : "#e9ecef"}`, background: l.code === currentLocale ? "#1a3d2b" : "transparent", color: l.code === currentLocale ? "#fff" : "#343a40", cursor: "pointer", fontWeight: 600, fontSize: "0.8rem" }}>
                 {l.flag} {l.label}
               </button>
             ))}
           </div>
+          <a href="#tours" onClick={() => setMenuOpen(false)} className="btn-primary" style={{ marginTop: "1.5rem", justifyContent: "center", padding: "1rem" }}>
+            {t("tours")}
+          </a>
         </div>
       )}
 
       <style>{`
         @media (max-width: 768px) {
           .hidden-mobile { display: none !important; }
-          .mobile-menu-btn { display: block !important; }
+          .mobile-menu-btn { display: block !important; padding: 0.5rem; margin-right: -0.5rem; }
         }
+        .mobile-scroll-container::-webkit-scrollbar { display: none; }
       `}</style>
     </header>
   );

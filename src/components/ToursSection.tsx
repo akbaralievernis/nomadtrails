@@ -35,7 +35,7 @@ export default function ToursSection() {
   }
 
   return (
-    <section ref={sectionRef} id="tours" style={{ padding: "7rem 2rem", background: "#f8f9fa" }}>
+    <section ref={sectionRef} id="tours" className="section-padding" style={{ background: "#f8f9fa" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div ref={headRef} style={{ textAlign: "center", marginBottom: "4rem" }}>
           <span className="section-badge">{t("title")}</span>
@@ -44,7 +44,7 @@ export default function ToursSection() {
         </div>
 
         {/* Tour Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(560px, 1fr))", gap: "2.5rem", marginBottom: "6rem" }}>
+        <div className="responsive-grid" style={{ marginBottom: "6rem" }}>
           {TOURS.map((tour) => (
             <article key={tour.id} className="card-hover" style={{ display: "flex", flexDirection: "column", background: "#fff", borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 30px rgba(0,0,0,0.07)", border: "1px solid rgba(0,0,0,0.04)" }}>
               <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
@@ -60,7 +60,7 @@ export default function ToursSection() {
                   <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.75rem" }}>({tour.reviews})</span>
                 </div>
               </div>
-              <div style={{ padding: "1.75rem", flex: 1, display: "flex", flexDirection: "column" }}>
+              <div className="card-content" style={{ padding: "clamp(1.25rem, 4vw, 1.75rem)", flex: 1, display: "flex", flexDirection: "column" }}>
                 <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.3rem", fontWeight: 700, color: "#0d1117", marginBottom: "0.75rem" }}>{tour.name}</h3>
                 <div style={{ display: "flex", gap: "1.5rem", marginBottom: "1.25rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#6c757d", fontSize: "0.82rem" }}>
@@ -90,7 +90,7 @@ export default function ToursSection() {
         </div>
 
         {/* Booking Form */}
-        <div id="booking-form" style={{ background: "#fff", borderRadius: 24, padding: "3rem", boxShadow: "0 8px 50px rgba(0,0,0,0.08)", border: "1px solid rgba(0,0,0,0.05)", maxWidth: 780, margin: "0 auto" }}>
+        <div id="booking-form" style={{ background: "#fff", borderRadius: 24, padding: "clamp(1.5rem, 8vw, 3.5rem)", boxShadow: "0 8px 50px rgba(0,0,0,0.08)", border: "1px solid rgba(0,0,0,0.05)", maxWidth: 780, margin: "0 auto" }}>
           <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.8rem", fontWeight: 700, color: "#0d1117", marginBottom: "0.5rem", textAlign: "center" }}>{t("form_title")}</h3>
           <div style={{ width: 50, height: 3, background: "linear-gradient(90deg,#1a3d2b,#c9a84c)", borderRadius: 2, margin: "0 auto 2rem" }} />
 
@@ -100,7 +100,8 @@ export default function ToursSection() {
               <p style={{ fontSize: "1.1rem", fontWeight: 600 }}>{t("form_success")}</p>
             </div>
           ) : (
-            <form ref={formRef} onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }}>
+            <form ref={formRef} onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.25rem" }}>
               {[
                 { key: "name", label: t("form_name"), type: "text", span: 1 },
                 { key: "email", label: t("form_email"), type: "email", span: 1 },
@@ -112,6 +113,7 @@ export default function ToursSection() {
                   <input type={type} className="input-field" required value={formData[key as keyof typeof formData]} onChange={e => setFormData(p => ({ ...p, [key]: e.target.value }))} />
                 </div>
               ))}
+              </div>
               <div>
                 <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 600, color: "#343a40", marginBottom: "0.4rem" }}>{t("form_tour")}</label>
                 <select className="input-field" value={formData.tour} onChange={e => setFormData(p => ({ ...p, tour: e.target.value }))}>
