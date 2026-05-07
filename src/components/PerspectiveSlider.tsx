@@ -183,14 +183,10 @@ export default function PerspectiveSlider() {
             return (
               <div key={i} className={className} data-id={id}>
                 <div className="slider__text-item-head">
-                  <h3 className="font-playfair text-white text-6xl md:text-8xl drop-shadow-2xl">
-                    {t(`${key}.head`)}
-                  </h3>
+                  <h3>{t(`${key}.head`)}</h3>
                 </div>
                 <div className="slider__text-item-info">
-                  <p className="text-white/90 text-sm md:text-lg max-w-xl drop-shadow-lg">
-                    {t(`${key}.info`)}
-                  </p>
+                  <p>{t(`${key}.info`)}</p>
                 </div>
               </div>
             );
