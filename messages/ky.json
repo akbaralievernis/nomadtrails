@@ -9,7 +9,10 @@
     "tours": "Турлар жана брондоо",
     "hotels": "Мейманканалар",
     "transport": "Транспорт",
-    "contact": "Байланыш"
+    "contact": "Байланышуу",
+    "profile": "Профиль",
+    "login": "Кирүү",
+    "logout": "Чыгуу"
   },
   "hero": {
     "badge": "Кыргызстанга кош келиңиздер",
@@ -168,5 +171,48 @@
     "contact": "Байланыш",
     "rights": "Бардык укуктар корголгон.",
     "built_with": "Кыргызстан үчүн ❤️ менен жасалган"
+  },
+  "auth": {
+    "login_google": "Google аркылуу кирүү",
+    "welcome_back": "Кайра келишиңиз менен",
+    "sign_in_required": "Ээлеп коюу үчүн кириңиз"
+  },
+  "profile": {
+    "title": "Менин профилим",
+    "my_bookings": "Менин ээлөөлөрүм",
+    "no_bookings": "Сизде азырынча ээлөөлөр жок.",
+    "explore_tours": "Турларды көрүү",
+    "type_tour": "Тур",
+    "type_hotel": "Отель",
+    "type_transport": "Транспорт",
+    "status_new": "Жаңы",
+    "status_contacted": "Иштеп жатат",
+    "status_confirmed": "Ырасталды",
+    "status_cancelled": "Жокко чыгарылды",
+    "guests": "конок",
+    "unknown_item": "Белгисиз объект",
+    "settings": "Жөндөөлөр",
+    "full_name": "Толук аты-жөнү",
+    "phone_number": "Телефон номери",
+    "save_changes": "Өзгөртүүлөрдү сактоо",
+    "saved": "Сакталды!"
+  },
+  "admin": {
+    "dashboard_title": "Башкаруу панели",
+    "tab_bookings": "Ээлөөлөр",
+    "tab_tours": "Турлар",
+    "tab_hotels": "Отелдер",
+    "total_bookings": "Жалпы",
+    "new_bookings": "Жаңы",
+    "confirmed_bookings": "Ырасталды",
+    "table_id": "ID",
+    "table_client": "Кардар",
+    "table_item": "Кызмат",
+    "table_date": "Дата / Коноктор",
+    "table_status": "Статус",
+    "table_actions": "Аракеттер",
+    "guests": "конок",
+    "action_confirm": "Ырастоо",
+    "action_cancel": "Жокко чыгаруу"
   }
 }

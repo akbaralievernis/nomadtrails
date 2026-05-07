@@ -9,7 +9,10 @@
     "tours": "Туры и бронирование",
     "hotels": "Отели",
     "transport": "Транспорт",
-    "contact": "Контакты"
+    "contact": "Контакты",
+    "profile": "Профиль",
+    "login": "Войти",
+    "logout": "Выйти"
   },
   "hero": {
     "badge": "Добро пожаловать в Кыргызстан",
@@ -168,5 +171,48 @@
     "contact": "Контакты",
     "rights": "Все права защищены.",
     "built_with": "Сделано с ❤️ для Кыргызстана"
+  },
+  "auth": {
+    "login_google": "Войти через Google",
+    "welcome_back": "С возвращением",
+    "sign_in_required": "Пожалуйста, войдите, чтобы забронировать"
+  },
+  "profile": {
+    "title": "Мой профиль",
+    "my_bookings": "Мои бронирования",
+    "no_bookings": "У вас пока нет бронирований.",
+    "explore_tours": "Посмотреть туры",
+    "type_tour": "Тур",
+    "type_hotel": "Отель",
+    "type_transport": "Транспорт",
+    "status_new": "Новый",
+    "status_contacted": "В обработке",
+    "status_confirmed": "Подтвержден",
+    "status_cancelled": "Отменен",
+    "guests": "гостей",
+    "unknown_item": "Неизвестный объект",
+    "settings": "Настройки",
+    "full_name": "Полное имя",
+    "phone_number": "Номер телефона",
+    "save_changes": "Сохранить изменения",
+    "saved": "Сохранено!"
+  },
+  "admin": {
+    "dashboard_title": "Панель управления",
+    "tab_bookings": "Бронирования",
+    "tab_tours": "Туры",
+    "tab_hotels": "Отели",
+    "total_bookings": "Всего",
+    "new_bookings": "Новые",
+    "confirmed_bookings": "Подтвержденные",
+    "table_id": "ID",
+    "table_client": "Клиент",
+    "table_item": "Услуга",
+    "table_date": "Дата / Гости",
+    "table_status": "Статус",
+    "table_actions": "Действия",
+    "guests": "гостей",
+    "action_confirm": "Подтвердить",
+    "action_cancel": "Отменить"
   }
 }

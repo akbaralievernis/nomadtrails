@@ -5,20 +5,21 @@ import { NextResponse } from "next/server";
 export async function PATCH(req: Request) {
   try {
     const session = await auth();
-    if (!session || (session.user as any).role !== 'admin') {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    if (!session || !session.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { bookingId, status } = await req.json();
+    const { name, phone } = await req.json();
+    const email = session.user.email;
 
     await pool.query(
-      "UPDATE bookings SET status = ? WHERE id = ?",
-      [status, bookingId]
+      "UPDATE users SET name = ?, phone = ? WHERE email = ?",
+      [name, phone, email]
     );
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error updating booking:", error);
+    console.error("Error updating profile:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

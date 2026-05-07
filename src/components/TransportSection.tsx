@@ -95,7 +95,15 @@ export default function TransportSection() {
                   <p style={{ fontSize: "0.87rem", color: "#6c757d", lineHeight: 1.65, marginBottom: "0.6rem" }}>
                     {t(`${key}_desc` as "jeep_desc" | "flight_desc" | "visa_desc" | "safety_desc")}
                   </p>
-                  <a href="#contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", color: color, fontWeight: 700, fontSize: "0.8rem", textDecoration: "none" }}>
+                  <a href="#booking-form" onClick={() => {
+                    const formElement = document.querySelector('select[name="item-select"]') as HTMLSelectElement;
+                    if (formElement) {
+                      const title = t(`${key}_title` as any);
+                      const option = Array.from(formElement.options).find(o => o.text === title);
+                      if (option) formElement.value = option.value;
+                      formElement.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                  }} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", color: color, fontWeight: 700, fontSize: "0.8rem", textDecoration: "none" }}>
                     {t("learn_more")} <ArrowRight size={12} />
                   </a>
                 </div>

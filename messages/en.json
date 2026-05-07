@@ -9,7 +9,10 @@
     "tours": "Tours & Booking",
     "hotels": "Hotels",
     "transport": "Transport",
-    "contact": "Contact"
+    "contact": "Contact",
+    "profile": "Profile",
+    "login": "Login",
+    "logout": "Logout"
   },
   "hero": {
     "badge": "Welcome to Kyrgyzstan",
@@ -168,5 +171,48 @@
     "contact": "Contact",
     "rights": "All rights reserved.",
     "built_with": "Built with ❤️ for Kyrgyzstan"
+  },
+  "auth": {
+    "login_google": "Login with Google",
+    "welcome_back": "Welcome back",
+    "sign_in_required": "Please sign in to book"
+  },
+  "profile": {
+    "title": "My Profile",
+    "my_bookings": "My Bookings",
+    "no_bookings": "You have no bookings yet.",
+    "explore_tours": "Explore Tours",
+    "type_tour": "Tour",
+    "type_hotel": "Hotel",
+    "type_transport": "Transport",
+    "status_new": "New",
+    "status_contacted": "Processing",
+    "status_confirmed": "Confirmed",
+    "status_cancelled": "Cancelled",
+    "guests": "guests",
+    "unknown_item": "Unknown Item",
+    "settings": "Settings",
+    "full_name": "Full Name",
+    "phone_number": "Phone Number",
+    "save_changes": "Save Changes",
+    "saved": "Saved!"
+  },
+  "admin": {
+    "dashboard_title": "Admin Dashboard",
+    "tab_bookings": "Bookings",
+    "tab_tours": "Tours",
+    "tab_hotels": "Hotels",
+    "total_bookings": "Total",
+    "new_bookings": "New",
+    "confirmed_bookings": "Confirmed",
+    "table_id": "ID",
+    "table_client": "Client",
+    "table_item": "Service",
+    "table_date": "Date / Guests",
+    "table_status": "Status",
+    "table_actions": "Actions",
+    "guests": "guests",
+    "action_confirm": "Confirm",
+    "action_cancel": "Cancel"
   }
 }

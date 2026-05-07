@@ -72,7 +72,14 @@ export default function HotelsSection() {
                     <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 700, color: "#1a3d2b" }}>${hotel.price}</span>
                     <span style={{ fontSize: "0.78rem", color: "#6c757d" }}> / {t("per_night")}</span>
                   </div>
-                  <a href="#booking-form" className="btn-primary" style={{ padding: "0.6rem 1.3rem", fontSize: "0.82rem" }}>{t("book")}</a>
+                  <a href="#booking-form" onClick={() => {
+                    const formElement = document.querySelector('select[name="item-select"]') as HTMLSelectElement;
+                    if (formElement) {
+                      const option = Array.from(formElement.options).find(o => o.text === t(`list.${hotel.key}.name`));
+                      if (option) formElement.value = option.value;
+                      formElement.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                  }} className="btn-primary" style={{ padding: "0.6rem 1.3rem", fontSize: "0.82rem" }}>{t("book")}</a>
                 </div>
               </div>
             </article>

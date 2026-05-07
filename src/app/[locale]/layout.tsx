@@ -21,6 +21,7 @@ export function generateStaticParams() {
 }
 
 import BackgroundMusic from "@/components/BackgroundMusic";
+import { Providers } from "@/components/Providers";
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
@@ -43,8 +44,10 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body className="font-inter antialiased">
         <NextIntlClientProvider messages={messages}>
-          {children}
-          <BackgroundMusic />
+          <Providers>
+            {children}
+            <BackgroundMusic />
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>
