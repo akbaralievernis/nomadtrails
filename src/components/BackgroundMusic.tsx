@@ -37,7 +37,7 @@ export default function BackgroundMusic() {
   };
 
   return (
-    <div style={{ position: "fixed", bottom: "clamp(1rem, 5vw, 2rem)", left: "clamp(1rem, 5vw, 2rem)", zIndex: 1000 }}>
+    <div style={{ position: "fixed", bottom: "clamp(1.5rem, 6vw, 2.5rem)", right: "clamp(1.5rem, 6vw, 2.5rem)", zIndex: 1000 }}>
       <audio
         ref={audioRef}
         src="/audio/bg_music.mp3"

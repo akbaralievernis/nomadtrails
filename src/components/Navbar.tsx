@@ -83,12 +83,14 @@ export default function Navbar() {
           ))}
 
           {/* Language Switcher */}
-          <div style={{ position: "relative" }}>
-            <button onClick={() => setLangOpen(!langOpen)} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: scrolled ? "rgba(26,61,43,0.08)" : "rgba(255,255,255,0.15)", border: "none", borderRadius: 999, padding: "0.5rem 1rem", cursor: "pointer", fontSize: "0.82rem", fontWeight: 600, color: scrolled ? "#1a3d2b" : "#fff", transition: "all 0.2s" }}>
-              <Globe size={14} />
-              <span>{currentLang.flag} {currentLang.code.toUpperCase()}</span>
-              <ChevronDown size={12} style={{ transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
-            </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+            <Link href={`/${currentLocale}/admin`} style={{ fontSize: "0.7rem", fontWeight: 800, color: scrolled ? "#1a3d2b" : "#c9a84c", textTransform: "uppercase", letterSpacing: "0.15em", textDecoration: "none", border: `1px solid ${scrolled ? "rgba(26,61,43,0.2)" : "rgba(201,168,76,0.4)"}`, padding: "0.4rem 0.8rem", borderRadius: "8px" }}>Admin</Link>
+            <div style={{ position: "relative" }}>
+              <button onClick={() => setLangOpen(!langOpen)} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: scrolled ? "rgba(26,61,43,0.08)" : "rgba(255,255,255,0.15)", border: "none", borderRadius: 999, padding: "0.5rem 1rem", cursor: "pointer", fontSize: "0.82rem", fontWeight: 600, color: scrolled ? "#1a3d2b" : "#fff", transition: "all 0.2s" }}>
+                <Globe size={14} />
+                <span>{currentLang.flag} {currentLang.code.toUpperCase()}</span>
+                <ChevronDown size={12} style={{ transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
+              </button>
             {langOpen && (
               <div style={{ position: "absolute", top: "calc(100% + 8px)", right: 0, background: "#fff", borderRadius: 12, boxShadow: "0 8px 40px rgba(0,0,0,0.15)", overflow: "hidden", minWidth: 150, border: "1px solid rgba(0,0,0,0.06)" }}>
                 {LOCALES.map((l) => (
@@ -99,6 +101,7 @@ export default function Navbar() {
               </div>
             )}
           </div>
+        </div>
 
           <a href="#tours" className="btn-primary" style={{ padding: "0.6rem 1.4rem", fontSize: "0.82rem" }}>
             {t("tours")}

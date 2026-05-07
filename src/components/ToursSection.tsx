@@ -8,10 +8,10 @@ import { Clock, Users, Star, Check, X } from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);
 
 const TOURS = [
-  { id: 1, key: "kelsuu_tashrabat", days: 7, price: 890, group: "2-8", rating: 4.9, reviews: 47, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80" },
-  { id: 2, key: "enilchek", days: 12, price: 2400, group: "2-6", rating: 5.0, reviews: 18, image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=700&q=80" },
-  { id: 3, key: "issyk_kul", days: 5, price: 550, group: "2-12", rating: 4.8, reviews: 92, image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=700&q=80" },
-  { id: 4, key: "nomadic", days: 9, price: 1250, group: "2-8", rating: 4.9, reviews: 33, image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80" },
+  { id: 1, key: "kelsuu_tashrabat", days: 7, price: 890, group: "2-8", rating: 4.9, reviews: 47, image: "https://images.unsplash.com/photo-1544084944-15269ec7b5a0?w=800&q=80" },
+  { id: 2, key: "enilchek", days: 12, price: 2400, group: "2-6", rating: 5.0, reviews: 18, image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80" },
+  { id: 3, key: "issyk_kul", days: 5, price: 550, group: "2-12", rating: 4.8, reviews: 92, image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80" },
+  { id: 4, key: "nomadic", days: 9, price: 1250, group: "2-8", rating: 4.9, reviews: 33, image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80" },
 ];
 
 const DIFF_COLOR: Record<string, string> = { Easy: "#40916c", Moderate: "#c9a84c", Hard: "#c0392b", "Орто": "#c9a84c", "Средняя": "#c9a84c", "Жеңил": "#40916c", "Легкая": "#40916c", "Кыйын": "#c0392b", "Тяжелая": "#c0392b" };
