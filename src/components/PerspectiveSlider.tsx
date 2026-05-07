@@ -34,6 +34,10 @@ export default function PerspectiveSlider() {
     };
     
     handleResize();
+    // Set initial position to center to avoid jumpy starts
+    targetPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    lastPos.current = { ...targetPos.current };
+    
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -133,6 +137,11 @@ export default function PerspectiveSlider() {
       className={`slider-container ${bgNext ? "slider--bg-next" : ""}`}
       onMouseMove={onMouseMove}
       style={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         "--img-prev": `url("${IMAGES[activeId - 1]}")`,
         "--img-next": `url("${IMAGES[activeId === IMAGES.length ? 0 : activeId]}")`
       } as any}

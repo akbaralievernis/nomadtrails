@@ -10,19 +10,27 @@
 
 
 
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #0d1117; /* Dark background to prevent white flash */
+}
+
 .slider-container::before, .slider-container::after {
   content: '';
-  left: -1vw;
-  top: -1vh;
+  left: 0;
+  top: 0;
   display: block;
   position: absolute;
-  width: 102vw;
-  height: 102vh;
+  width: 100%;
+  height: 100%;
   background-position: center;
   background-size: cover;
   will-change: opacity;
   z-index: -1;
-  box-shadow: 0 0 0 50vmax rgba(0, 0, 0, 0.4) inset;
+  filter: brightness(0.6);
 }
 
 .slider-container::before {
