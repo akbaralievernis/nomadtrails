@@ -8,13 +8,13 @@ import { Clock, Users, Star, Check, X } from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);
 
 const TOURS = [
-  { id: 1, name: "Kel-Suu & Tash-Rabat Explorer", days: 7, price: 890, difficulty: "Moderate", group: "2-8", rating: 4.9, reviews: 47, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80", includes: ["Guide", "Transport", "Yurt Stays", "Meals", "Permits"] },
-  { id: 2, name: "Enilchek Glacier Expedition", days: 12, price: 2400, difficulty: "Hard", group: "2-6", rating: 5.0, reviews: 18, image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=700&q=80", includes: ["Helicopter", "Guide", "Camp Equipment", "Meals", "Insurance"] },
-  { id: 3, name: "Issyk-Kul Discovery Loop", days: 5, price: 550, difficulty: "Easy", group: "2-12", rating: 4.8, reviews: 92, image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=700&q=80", includes: ["Guide", "Transport", "Hotel", "Breakfast"] },
-  { id: 4, name: "Nomadic Life & Eagle Hunting", days: 9, price: 1250, difficulty: "Moderate", group: "2-8", rating: 4.9, reviews: 33, image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80", includes: ["Guide", "Yurt Stays", "Eagle Show", "Meals", "Horse Riding"] },
+  { id: 1, key: "kelsuu_tashrabat", days: 7, price: 890, group: "2-8", rating: 4.9, reviews: 47, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80" },
+  { id: 2, key: "enilchek", days: 12, price: 2400, group: "2-6", rating: 5.0, reviews: 18, image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=700&q=80" },
+  { id: 3, key: "issyk_kul", days: 5, price: 550, group: "2-12", rating: 4.8, reviews: 92, image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=700&q=80" },
+  { id: 4, key: "nomadic", days: 9, price: 1250, group: "2-8", rating: 4.9, reviews: 33, image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80" },
 ];
 
-const DIFF_COLOR: Record<string, string> = { Easy: "#40916c", Moderate: "#c9a84c", Hard: "#c0392b" };
+const DIFF_COLOR: Record<string, string> = { Easy: "#40916c", Moderate: "#c9a84c", Hard: "#c0392b", "Орто": "#c9a84c", "Средняя": "#c9a84c", "Жеңил": "#40916c", "Легкая": "#40916c", "Кыйын": "#c0392b", "Тяжелая": "#c0392b" };
 
 export default function ToursSection() {
   const t = useTranslations("tours");
@@ -45,48 +45,51 @@ export default function ToursSection() {
 
         {/* Tour Cards */}
         <div className="responsive-grid" style={{ marginBottom: "6rem" }}>
-          {TOURS.map((tour) => (
-            <article key={tour.id} className="card-hover" style={{ display: "flex", flexDirection: "column", background: "#fff", borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 30px rgba(0,0,0,0.07)", border: "1px solid rgba(0,0,0,0.04)" }}>
-              <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
-                <img src={tour.image} alt={tour.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s" }}
-                  onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
-                  onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")} />
-                <div style={{ position: "absolute", top: "1rem", left: "1rem", background: DIFF_COLOR[tour.difficulty], color: "#fff", borderRadius: 999, padding: "0.3rem 0.85rem", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                  {tour.difficulty}
-                </div>
-                <div style={{ position: "absolute", bottom: "1rem", right: "1rem", background: "rgba(13,17,23,0.75)", backdropFilter: "blur(8px)", borderRadius: 12, padding: "0.5rem 0.85rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                  <Star size={12} color="#c9a84c" fill="#c9a84c" />
-                  <span style={{ color: "#fff", fontSize: "0.82rem", fontWeight: 700 }}>{tour.rating}</span>
-                  <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.75rem" }}>({tour.reviews})</span>
-                </div>
-              </div>
-              <div className="card-content" style={{ padding: "clamp(1.25rem, 4vw, 1.75rem)", flex: 1, display: "flex", flexDirection: "column" }}>
-                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.3rem", fontWeight: 700, color: "#0d1117", marginBottom: "0.75rem" }}>{tour.name}</h3>
-                <div style={{ display: "flex", gap: "1.5rem", marginBottom: "1.25rem" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#6c757d", fontSize: "0.82rem" }}>
-                    <Clock size={13} /><span>{tour.days} {t("days")}</span>
+          {TOURS.map((tour) => {
+            const tourDiff = t(`list.${tour.key}.difficulty`);
+            return (
+              <article key={tour.id} className="card-hover" style={{ display: "flex", flexDirection: "column", background: "#fff", borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 30px rgba(0,0,0,0.07)", border: "1px solid rgba(0,0,0,0.04)" }}>
+                <div style={{ position: "relative", height: 240, overflow: "hidden" }}>
+                  <img src={tour.image} alt={t(`list.${tour.key}.name`)} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s" }}
+                    onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
+                    onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")} />
+                  <div style={{ position: "absolute", top: "1rem", left: "1rem", background: DIFF_COLOR[tourDiff] || "#1a3d2b", color: "#fff", borderRadius: 999, padding: "0.3rem 0.85rem", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                    {tourDiff}
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#6c757d", fontSize: "0.82rem" }}>
-                    <Users size={13} /><span>{tour.group}</span>
+                  <div style={{ position: "absolute", bottom: "1rem", right: "1rem", background: "rgba(13,17,23,0.75)", backdropFilter: "blur(8px)", borderRadius: 12, padding: "0.5rem 0.85rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <Star size={12} color="#c9a84c" fill="#c9a84c" />
+                    <span style={{ color: "#fff", fontSize: "0.82rem", fontWeight: 700 }}>{tour.rating}</span>
+                    <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.75rem" }}>({tour.reviews})</span>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "1.5rem" }}>
-                  {tour.includes.map((inc) => (
-                    <span key={inc} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", background: "rgba(64,145,108,0.1)", color: "#1a3d2b", borderRadius: 999, padding: "0.25rem 0.7rem", fontSize: "0.75rem", fontWeight: 600 }}>
-                      <Check size={10} />{inc}
-                    </span>
-                  ))}
-                </div>
-                <div style={{ marginTop: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div>
-                    <span style={{ fontSize: "0.8rem", color: "#6c757d" }}>{t("from")} </span>
-                    <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.6rem", fontWeight: 700, color: "#1a3d2b" }}>${tour.price}</span>
+                <div className="card-content" style={{ padding: "clamp(1.25rem, 4vw, 1.75rem)", flex: 1, display: "flex", flexDirection: "column" }}>
+                  <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.3rem", fontWeight: 700, color: "#0d1117", marginBottom: "0.75rem" }}>{t(`list.${tour.key}.name`)}</h3>
+                  <div style={{ display: "flex", gap: "1.5rem", marginBottom: "1.25rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#6c757d", fontSize: "0.82rem" }}>
+                      <Clock size={13} /><span>{tour.days} {t("days")}</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#6c757d", fontSize: "0.82rem" }}>
+                      <Users size={13} /><span>{tour.group}</span>
+                    </div>
                   </div>
-                  <a href="#booking-form" className="btn-primary" style={{ padding: "0.65rem 1.5rem", fontSize: "0.85rem" }}>{t("book_now")}</a>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "1.5rem" }}>
+                    {(t.raw(`list.${tour.key}.includes`) as string[]).map((inc) => (
+                      <span key={inc} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", background: "rgba(64,145,108,0.1)", color: "#1a3d2b", borderRadius: 999, padding: "0.25rem 0.7rem", fontSize: "0.75rem", fontWeight: 600 }}>
+                        <Check size={10} />{inc}
+                      </span>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: "auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div>
+                      <span style={{ fontSize: "0.8rem", color: "#6c757d" }}>{t("from")} </span>
+                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.6rem", fontWeight: 700, color: "#1a3d2b" }}>${tour.price}</span>
+                    </div>
+                    <a href="#booking-form" className="btn-primary" style={{ padding: "0.65rem 1.5rem", fontSize: "0.85rem" }}>{t("book_now")}</a>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
 
         {/* Booking Form */}
@@ -118,7 +121,7 @@ export default function ToursSection() {
                 <label style={{ display: "block", fontSize: "0.82rem", fontWeight: 600, color: "#343a40", marginBottom: "0.4rem" }}>{t("form_tour")}</label>
                 <select className="input-field" value={formData.tour} onChange={e => setFormData(p => ({ ...p, tour: e.target.value }))}>
                   <option value="">—</option>
-                  {TOURS.map(t2 => <option key={t2.id} value={t2.name}>{t2.name}</option>)}
+                  {TOURS.map(t2 => <option key={t2.id} value={t(`list.${t2.key}.name`)}>{t(`list.${t2.key}.name`)}</option>)}
                 </select>
               </div>
               <div>

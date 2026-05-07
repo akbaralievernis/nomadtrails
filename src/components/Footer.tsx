@@ -88,7 +88,7 @@ export default function Footer() {
             © {new Date().getFullYear()} {tc("site_name")}. {t("rights")}
           </span>
           <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.25)" }}>
-            Built with ❤️ for Kyrgyzstan
+            {t("built_with")}
           </span>
         </div>
       </div>

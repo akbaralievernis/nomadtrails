@@ -73,7 +73,15 @@
     "filter_lakes": "Lakes",
     "filter_history": "History",
     "filter_canyons": "Canyons",
-    "read_more": "Read More"
+    "read_more": "Read More",
+    "list": {
+      "kelsuu": { "name": "Kel-Suu Lake", "region": "Naryn Oblast", "desc": "A hidden turquoise gem near the Chinese border, accessible only by horse." },
+      "skazka": { "name": "Skazka Canyon", "region": "Issyk-Kul Oblast", "desc": "Fairy-tale red sandstone formations rising from the Kyrgyz steppe." },
+      "tashrabat": { "name": "Tash-Rabat", "region": "Naryn Oblast", "desc": "A 15th-century stone caravanserai on the ancient Silk Road route." },
+      "enilchek": { "name": "Enilchek Glacier", "region": "Issyk-Kul Oblast", "desc": "One of the largest non-polar glaciers in the world, in the Tian Shan range." },
+      "saryjaz": { "name": "Sary-Jaz Valley", "region": "Issyk-Kul Oblast", "desc": "Remote alpine valleys with sheer 7,000m walls on all sides." },
+      "sonkul": { "name": "Son-Kul Lake", "region": "Naryn Oblast", "desc": "A high-altitude nomadic pasture lake at 3,016m with yurt camps." }
+    }
   },
   "tours": {
     "title": "Tours & Experiences",
@@ -93,7 +101,13 @@
     "form_guests": "Number of Guests",
     "form_message": "Special Requests",
     "form_submit": "Send Request",
-    "form_success": "Thank you! We'll contact you within 24 hours."
+    "form_success": "Thank you! We'll contact you within 24 hours.",
+    "list": {
+      "kelsuu_tashrabat": { "name": "Kel-Suu & Tash-Rabat Explorer", "difficulty": "Moderate", "includes": ["Guide", "Transport", "Yurt Stays", "Meals", "Permits"] },
+      "enilchek": { "name": "Enilchek Glacier Expedition", "difficulty": "Hard", "includes": ["Helicopter", "Guide", "Camp Equipment", "Meals", "Insurance"] },
+      "issyk_kul": { "name": "Issyk-Kul Discovery Loop", "difficulty": "Easy", "includes": ["Guide", "Transport", "Hotel", "Breakfast"] },
+      "nomadic": { "name": "Nomadic Life & Eagle Hunting", "difficulty": "Moderate", "includes": ["Guide", "Yurt Stays", "Eagle Show", "Meals", "Horse Riding"] }
+    }
   },
   "hotels": {
     "title": "Where to Stay",
@@ -103,7 +117,23 @@
     "type_yurt": "Yurt Camp",
     "type_lodge": "Mountain Lodge",
     "type_hotel": "Boutique Hotel",
-    "type_guesthouse": "Guesthouse"
+    "type_guesthouse": "Guesthouse",
+    "amenities": {
+      "wifi": "Wi-Fi",
+      "meals": "Meals",
+      "transfer": "Transfer",
+      "spa": "Spa",
+      "pool": "Pool",
+      "horse_riding": "Horse Riding"
+    },
+    "list": {
+      "kelsuu": { "name": "Yurt Camp Kel-Suu", "location": "Naryn Oblast" },
+      "khan_tengri": { "name": "Khan Tengri Lodge", "location": "Karakol" },
+      "boutique": { "name": "Issyk-Kul Boutique", "location": "Cholpon-Ata" },
+      "guesthouse": { "name": "Tash-Rabat Guesthouse", "location": "Naryn" },
+      "sky_camp": { "name": "Son-Kul Sky Camp", "location": "Naryn Oblast" },
+      "luxe": { "name": "Bishkek Luxe Hotel", "location": "Bishkek" }
+    }
   },
   "transport": {
     "title": "Transport & Logistics",
@@ -136,6 +166,7 @@
     "quick_links": "Quick Links",
     "services": "Our Services",
     "contact": "Contact",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "built_with": "Built with ❤️ for Kyrgyzstan"
   }
 }

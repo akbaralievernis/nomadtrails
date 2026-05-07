@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ContactSection() {
   const t = useTranslations("contact");
+  const tc = useTranslations("common");
   const sectionRef = useRef<HTMLElement>(null);
   const headRef = useRef<HTMLDivElement>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -40,7 +41,7 @@ export default function ContactSection() {
           {/* Info Panel */}
           <div className="contact-col" style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
             <div style={{ background: "linear-gradient(135deg,#1a3d2b,#2d6a4f)", borderRadius: 20, padding: "2.5rem", color: "#fff" }}>
-              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.4rem", fontWeight: 700, marginBottom: "1.75rem" }}>KG VIP Travel</h3>
+              <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.4rem", fontWeight: 700, marginBottom: "1.75rem" }}>{tc("site_name")}</h3>
               {[
                 { icon: Phone, text: t("phone") },
                 { icon: MapPin, text: t("address") },

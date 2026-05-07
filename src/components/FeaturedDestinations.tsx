@@ -8,12 +8,12 @@ import { ArrowRight, MapPin } from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);
 
 const DESTINATIONS = [
-  { id: 1, name: "Kel-Suu Lake", region: "Naryn Oblast", category: "lakes", image: "/images/dest_kelsuu.png", desc: "A hidden turquoise gem near the Chinese border, accessible only by horse." },
-  { id: 2, name: "Skazka Canyon", region: "Issyk-Kul Oblast", category: "canyons", image: "/images/dest_skazka.png", desc: "Fairy-tale red sandstone formations rising from the Kyrgyz steppe." },
-  { id: 3, name: "Tash-Rabat", region: "Naryn Oblast", category: "history", image: "/images/dest_tashrabat.png", desc: "A 15th-century stone caravanserai on the ancient Silk Road route." },
-  { id: 4, name: "Enilchek Glacier", region: "Issyk-Kul Oblast", category: "mountains", image: "/images/dest_enilchek.png", desc: "One of the largest non-polar glaciers in the world, in the Tian Shan range." },
-  { id: 5, name: "Sary-Jaz Valley", region: "Issyk-Kul Oblast", category: "mountains", image: "/images/dest_saryjaz.png", desc: "Remote alpine valleys with sheer 7,000m walls on all sides." },
-  { id: 6, name: "Son-Kul Lake", region: "Naryn Oblast", category: "lakes", image: "/images/dest_sonkul.png", desc: "A high-altitude nomadic pasture lake at 3,016m with yurt camps." },
+  { id: 1, key: "kelsuu", category: "lakes", image: "/images/dest_kelsuu.png" },
+  { id: 2, key: "skazka", category: "canyons", image: "/images/dest_skazka.png" },
+  { id: 3, key: "tashrabat", category: "history", image: "/images/dest_tashrabat.png" },
+  { id: 4, key: "enilchek", category: "mountains", image: "/images/dest_enilchek.png" },
+  { id: 5, key: "saryjaz", category: "mountains", image: "/images/dest_saryjaz.png" },
+  { id: 6, key: "sonkul", category: "lakes", image: "/images/dest_sonkul.png" },
 ];
 
 const FILTERS = ["filter_all", "filter_mountains", "filter_lakes", "filter_history", "filter_canyons"];
@@ -62,19 +62,19 @@ export default function FeaturedDestinations() {
           {filtered.map((dest) => (
             <article key={dest.id} className="card-hover" style={{ borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 30px rgba(0,0,0,0.07)", border: "1px solid rgba(0,0,0,0.04)", background: "#fff" }}>
               <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
-                <img src={dest.image} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease" }}
+                <img src={dest.image} alt={t(`list.${dest.key}.name`)} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease" }}
                   onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
                   onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")} />
                 <div style={{ position: "absolute", top: "1rem", right: "1rem", background: "rgba(255,255,255,0.9)", backdropFilter: "blur(8px)", borderRadius: 999, padding: "0.3rem 0.75rem", fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#1a3d2b" }}>
-                  {dest.category}
+                  {t(`filter_${dest.category}` as any)}
                 </div>
               </div>
               <div className="card-content" style={{ padding: "clamp(1.25rem, 4vw, 2rem)" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#6c757d", fontSize: "0.8rem", marginBottom: "0.5rem" }}>
-                  <MapPin size={12} /><span>{dest.region}</span>
+                  <MapPin size={12} /><span>{t(`list.${dest.key}.region`)}</span>
                 </div>
-                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.3rem", fontWeight: 700, color: "#0d1117", marginBottom: "0.5rem" }}>{dest.name}</h3>
-                <p style={{ fontSize: "0.88rem", color: "#6c757d", lineHeight: 1.65, marginBottom: "1.25rem" }}>{dest.desc}</p>
+                <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.3rem", fontWeight: 700, color: "#0d1117", marginBottom: "0.5rem" }}>{t(`list.${dest.key}.name`)}</h3>
+                <p style={{ fontSize: "0.88rem", color: "#6c757d", lineHeight: 1.65, marginBottom: "1.25rem" }}>{t(`list.${dest.key}.desc`)}</p>
                 <a href="#tours" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "#1a3d2b", fontWeight: 700, fontSize: "0.85rem", textDecoration: "none", transition: "gap 0.2s" }}
                   onMouseEnter={e => (e.currentTarget.style.gap = "0.75rem")}
                   onMouseLeave={e => (e.currentTarget.style.gap = "0.4rem")}>
