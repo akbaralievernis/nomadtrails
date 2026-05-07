@@ -1,0 +1,141 @@
+{
+  "common": {
+    "site_name": "NOMADTRAILS",
+    "site_tagline": "KYRGYZSTAN"
+  },
+  "nav": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "tours": "Tours & Booking",
+    "hotels": "Hotels",
+    "transport": "Transport",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Welcome to Kyrgyzstan",
+    "title": "The Land of",
+    "titleAccent": "Celestial Mountains",
+    "subtitle": "Discover ancient Silk Road caravans, turquoise alpine lakes, nomadic traditions, and breathtaking peaks — all in one unforgettable adventure.",
+    "cta_primary": "Explore Tours",
+    "cta_secondary": "View Destinations",
+    "scroll": "Scroll to explore",
+    "slider": {
+      "forest": {
+        "head": "Forest",
+        "info": "“And into the forest I go, to lose my mind and find my soul”"
+      },
+      "lake": {
+        "head": "Lake",
+        "info": "“Mist to mist, drops to drops. For water thou art, and unto water shalt thou return”"
+      },
+      "cliffs": {
+        "head": "Cliffs",
+        "info": "“Go to the edge of the cliff and jump off. Build your wings on the way down”"
+      },
+      "mountains": {
+        "head": "Mountains",
+        "info": "“What are men to rocks and mountains?”"
+      },
+      "peaks": {
+        "head": "Peaks",
+        "info": "“On all the peaks lies peace”"
+      }
+    }
+  },
+  "stats": {
+    "peaks": "Mountain Peaks",
+    "lakes": "Alpine Lakes",
+    "routes": "Unique Routes",
+    "satisfaction": "Guest Satisfaction"
+  },
+  "why": {
+    "title": "Why Kyrgyzstan?",
+    "subtitle": "Central Asia's last frontier — raw, authentic, and awe-inspiring",
+    "item1_title": "Untouched Wilderness",
+    "item1_desc": "Over 90% of the country is mountainous, offering pristine landscapes rarely touched by mass tourism.",
+    "item2_title": "Nomadic Culture",
+    "item2_desc": "Experience 3,000 years of living nomadic heritage — yurt stays, eagle hunters, and traditional crafts.",
+    "item3_title": "Silk Road History",
+    "item3_desc": "Ancient caravanserais, rock carvings and medieval fortresses tell the story of a great civilization.",
+    "item4_title": "Adventure Capital",
+    "item4_desc": "World-class trekking, heli-skiing, horse riding, and white-water rafting in one compact destination."
+  },
+  "featured_dest": {
+    "title": "Top Destinations",
+    "subtitle": "Iconic places that define the soul of Kyrgyzstan",
+    "explore": "Explore"
+  },
+  "destinations": {
+    "title": "All Destinations",
+    "subtitle": "Discover the hidden wonders of the world's last nomadic nation",
+    "filter_all": "All",
+    "filter_mountains": "Mountains",
+    "filter_lakes": "Lakes",
+    "filter_history": "History",
+    "filter_canyons": "Canyons",
+    "read_more": "Read More"
+  },
+  "tours": {
+    "title": "Tours & Experiences",
+    "subtitle": "Curated journeys crafted for the discerning traveller",
+    "days": "days",
+    "from": "From",
+    "book_now": "Book Now",
+    "difficulty": "Difficulty",
+    "group_size": "Group Size",
+    "includes": "Includes",
+    "form_title": "Request a Booking",
+    "form_name": "Full Name",
+    "form_email": "Email Address",
+    "form_phone": "Phone Number",
+    "form_tour": "Select Tour",
+    "form_date": "Preferred Date",
+    "form_guests": "Number of Guests",
+    "form_message": "Special Requests",
+    "form_submit": "Send Request",
+    "form_success": "Thank you! We'll contact you within 24 hours."
+  },
+  "hotels": {
+    "title": "Where to Stay",
+    "subtitle": "From luxury yurt camps to boutique mountain lodges",
+    "per_night": "per night",
+    "book": "Reserve Now",
+    "type_yurt": "Yurt Camp",
+    "type_lodge": "Mountain Lodge",
+    "type_hotel": "Boutique Hotel",
+    "type_guesthouse": "Guesthouse"
+  },
+  "transport": {
+    "title": "Transport & Logistics",
+    "subtitle": "Everything you need to navigate Kyrgyzstan with confidence",
+    "jeep_title": "4×4 Jeep Rentals",
+    "jeep_desc": "Rugged off-road vehicles with experienced local drivers for remote expeditions.",
+    "flight_title": "Domestic Flights",
+    "flight_desc": "Regular flights connecting Bishkek to Osh and key regional cities.",
+    "visa_title": "Visa Information",
+    "visa_desc": "Kyrgyzstan offers e-visa and visa-free entry for 60+ nationalities.",
+    "safety_title": "Safety & Tips",
+    "safety_desc": "Altitude acclimatisation, travel insurance, and emergency contacts.",
+    "learn_more": "Learn More"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Our team of local experts is ready to plan your perfect journey",
+    "name": "Your Name",
+    "email": "Email Address",
+    "subject": "Subject",
+    "message": "Your Message",
+    "send": "Send Message",
+    "whatsapp": "Chat on WhatsApp",
+    "phone": "+996 700 123 456",
+    "address": "Bishkek, Kyrgyzstan",
+    "success": "Message sent successfully!"
+  },
+  "footer": {
+    "tagline": "Premium nomadic experiences in the heart of the Tien Shan mountains.",
+    "quick_links": "Quick Links",
+    "services": "Our Services",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  }
+}
