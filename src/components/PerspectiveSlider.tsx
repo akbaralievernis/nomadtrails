@@ -138,14 +138,35 @@ export default function PerspectiveSlider() {
       onMouseMove={onMouseMove}
       style={{
         width: "100%",
-        height: "100vh",
+        height: "100dvh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        "--img-prev": `url("${IMAGES[activeId - 1]}")`,
-        "--img-next": `url("${IMAGES[activeId === IMAGES.length ? 0 : activeId]}")`
-      } as any}
+        position: "relative",
+        overflow: "hidden"
+      }}
     >
+      {/* Real Background Elements (replacing pseudo-elements for better reliability) */}
+      <div 
+        className="absolute inset-0 z-[-1] bg-center bg-cover transition-opacity duration-700"
+        style={{ 
+          backgroundImage: `url("${IMAGES[activeId - 1]}")`,
+          opacity: bgNext ? 0 : 1,
+          filter: "brightness(0.8)",
+          width: "100%",
+          height: "100%"
+        }}
+      />
+      <div 
+        className="absolute inset-0 z-[-2] bg-center bg-cover"
+        style={{ 
+          backgroundImage: `url("${IMAGES[prevId - 1]}")`,
+          filter: "brightness(0.8)",
+          width: "100%",
+          height: "100%"
+        }}
+      />
+
       <div id="slider-content" ref={contentRef} className="slider__content">
         <div className="slider__images">
           {IMAGES.map((src, i) => {
