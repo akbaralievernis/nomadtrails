@@ -14,23 +14,25 @@ export default function HeroSection() {
       <div 
         style={{ 
           position: "absolute", 
-          bottom: "2rem", 
+          bottom: "2.5rem", 
           left: "50%", 
           transform: "translateX(-50%)", 
           display: "flex", 
           flexDirection: "column", 
           alignItems: "center", 
           gap: "0.5rem", 
-          color: "rgba(255,255,255,0.7)", 
+          color: "white", 
+          textShadow: "0 2px 10px rgba(0,0,0,0.5)",
           fontSize: "0.75rem", 
-          letterSpacing: "0.15em", 
+          fontWeight: "bold",
+          letterSpacing: "0.2em", 
           textTransform: "uppercase", 
-          zIndex: 30,
+          zIndex: 50,
           pointerEvents: "none"
         }}
       >
         <span>{t("scroll")}</span>
-        <ChevronDown size={18} className="animate-bounce" />
+        <ChevronDown size={20} className="animate-bounce" />
       </div>
     </section>
   );
