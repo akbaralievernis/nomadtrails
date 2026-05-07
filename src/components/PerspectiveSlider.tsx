@@ -179,15 +179,18 @@ export default function PerspectiveSlider() {
             const id = i + 1;
             let className = "slider__text-item";
             if (id === activeId && !inTransit) className += " slider__text-item--active";
-            if (id === prevId && inTransit) className += " slider__text-item--backwards";
             
             return (
               <div key={i} className={className} data-id={id}>
                 <div className="slider__text-item-head">
-                  <h3>{t(`${key}.head`)}</h3>
+                  <h3 className="font-playfair text-white text-6xl md:text-8xl drop-shadow-2xl">
+                    {t(`${key}.head`)}
+                  </h3>
                 </div>
                 <div className="slider__text-item-info">
-                  <p>{t(`${key}.info`)}</p>
+                  <p className="text-white/90 text-sm md:text-lg max-w-xl drop-shadow-lg">
+                    {t(`${key}.info`)}
+                  </p>
                 </div>
               </div>
             );
