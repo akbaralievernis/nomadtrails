@@ -24,24 +24,24 @@
     "scroll": "Scroll to explore",
     "slider": {
       "forest": {
-        "head": "Forest",
-        "info": "“And into the forest I go, to lose my mind and find my soul”"
+        "head": "Forests",
+        "info": "Nature's harmony is the whisper of ancient forests where the soul awakens"
       },
       "lake": {
-        "head": "Lake",
-        "info": "“Mist to mist, drops to drops. For water thou art, and unto water shalt thou return”"
+        "head": "Lakes",
+        "info": "The mirror-like surface of alpine lakes holds the secrets of eternity"
       },
       "cliffs": {
-        "head": "Cliffs",
-        "info": "“Go to the edge of the cliff and jump off. Build your wings on the way down”"
+        "head": "Canyons",
+        "info": "The grandeur of canyons is the frozen music of time, carved in stone"
       },
       "mountains": {
         "head": "Mountains",
-        "info": "“What are men to rocks and mountains?”"
+        "info": "Mountains call to those whose soul seeks height and true freedom"
       },
       "peaks": {
         "head": "Peaks",
-        "info": "“On all the peaks lies peace”"
+        "info": "Where the sky meets the earth, serenity is born"
       }
     }
   },
@@ -213,6 +213,17 @@
     "table_actions": "Actions",
     "guests": "guests",
     "action_confirm": "Confirm",
-    "action_cancel": "Cancel"
+    "action_cancel": "Cancel",
+    "confirm_delete": "Are you sure you want to delete this item?",
+    "add_new": "Add New",
+    "loading": "Loading...",
+    "no_items": "No items found",
+    "type_tour": "Tour",
+    "type_hotel": "Hotel",
+    "type_transport": "Transport",
+    "status_new": "New",
+    "status_contacted": "Processing",
+    "status_confirmed": "Confirmed",
+    "status_cancelled": "Cancelled"
   }
 }
