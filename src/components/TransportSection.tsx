@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { useTranslations } from "next-intl";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { Truck, Plane, FileText, Shield, ArrowRight, OrbitControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
+import { Truck, Plane, FileText, Shield, ArrowRight } from "lucide-react";
 import * as THREE from "three";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -112,7 +113,9 @@ export default function TransportSection() {
               <ambientLight intensity={0.5} />
               <pointLight position={[10, 10, 10]} intensity={1.5} color="#c9a84c" />
               <pointLight position={[-10, -10, -10]} intensity={0.5} color="#40916c" />
-              <RealisticGlobe />
+              <Suspense fallback={null}>
+                <RealisticGlobe />
+              </Suspense>
               <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
             </Canvas>
           </div>
