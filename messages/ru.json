@@ -213,6 +213,17 @@
     "table_actions": "Действия",
     "guests": "гостей",
     "action_confirm": "Подтвердить",
-    "action_cancel": "Отменить"
+    "action_cancel": "Отменить",
+    "confirm_delete": "Вы уверены, что хотите удалить этот объект?",
+    "add_new": "Добавить",
+    "loading": "Загрузка...",
+    "no_items": "Объекты не найдены",
+    "type_tour": "Тур",
+    "type_hotel": "Отель",
+    "type_transport": "Транспорт",
+    "status_new": "Новый",
+    "status_contacted": "В обработке",
+    "status_confirmed": "Подтвержден",
+    "status_cancelled": "Отменен"
   }
 }

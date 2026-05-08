@@ -48,6 +48,17 @@ export default async function AdminDashboard({ params }: { params: Promise<{ loc
     guests: t("guests"),
     action_confirm: t("action_confirm"),
     action_cancel: t("action_cancel"),
+    confirm_delete: t("confirm_delete"),
+    add_new: t("add_new"),
+    loading: t("loading"),
+    no_items: t("no_items"),
+    tour: t("type_tour"),
+    hotel: t("type_hotel"),
+    transport: t("type_transport"),
+    status_new: t("status_new"),
+    status_contacted: t("status_contacted"),
+    status_confirmed: t("status_confirmed"),
+    status_cancelled: t("status_cancelled"),
   };
 
   return (
