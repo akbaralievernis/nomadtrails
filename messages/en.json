@@ -24,24 +24,24 @@
     "scroll": "Scroll to explore",
     "slider": {
       "forest": {
-        "head": "Forests",
-        "info": "Nature's harmony is the whisper of ancient forests where the soul awakens"
+        "head": "Forest",
+        "info": "“And into the forest I go, to lose my mind and find my soul”"
       },
       "lake": {
-        "head": "Lakes",
-        "info": "The mirror-like surface of alpine lakes holds the secrets of eternity"
+        "head": "Lake",
+        "info": "“Mist to mist, drops to drops. For water thou art, and unto water shalt thou return”"
       },
       "cliffs": {
-        "head": "Canyons",
-        "info": "The grandeur of canyons is the frozen music of time, carved in stone"
+        "head": "Cliffs",
+        "info": "“Go to the edge of the cliff and jump off. Build your wings on the way down”"
       },
       "mountains": {
         "head": "Mountains",
-        "info": "Mountains call to those whose soul seeks height and true freedom"
+        "info": "“What are men to rocks and mountains?”"
       },
       "peaks": {
         "head": "Peaks",
-        "info": "Where the sky meets the earth, serenity is born"
+        "info": "“On all the peaks lies peace”"
       }
     }
   },

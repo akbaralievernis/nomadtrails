@@ -64,33 +64,40 @@ export default async function AdminDashboard({ params }: { params: Promise<{ loc
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-24 pb-12 bg-[#f4f7f6]">
+      <main className="min-h-screen pt-24 pb-20 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-slate-900 via-emerald-950 to-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 px-4 md:px-0">
-            <h1 className="text-3xl font-bold font-playfair text-[#1a3d2b] flex items-center gap-3">
-              <ShieldCheck className="text-[#c9a84c]" size={36} />
-              {t("dashboard_title")}
-            </h1>
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 px-4 md:px-0">
+            <div>
+              <h1 className="text-4xl font-black font-playfair text-white flex items-center gap-4 mb-2">
+                <div className="w-12 h-12 rounded-2xl bg-[#c9a84c] flex items-center justify-center shadow-lg shadow-[#c9a84c]/20">
+                  <ShieldCheck className="text-white" size={28} />
+                </div>
+                {t("dashboard_title")}
+              </h1>
+              <p className="text-emerald-400/60 font-bold text-xs uppercase tracking-[0.3em] ml-16">Management Control Center</p>
+            </div>
+            
             <div className="flex flex-wrap gap-4">
               {[
-                { label: t("total_bookings"), value: stats.total, icon: Calendar, color: "blue" },
-                { label: t("new_bookings"), value: stats.new, icon: Clock, color: "orange" },
-                { label: t("confirmed_bookings"), value: stats.confirmed, icon: CheckCircle, color: "green" },
+                { label: t("total_bookings"), value: stats.total, icon: Calendar, color: "from-blue-500/20 to-blue-600/5", textColor: "text-blue-400" },
+                { label: t("new_bookings"), value: stats.new, icon: Clock, color: "from-orange-500/20 to-orange-600/5", textColor: "text-orange-400" },
+                { label: t("confirmed_bookings"), value: stats.confirmed, icon: CheckCircle, color: "from-emerald-500/20 to-emerald-600/5", textColor: "text-emerald-400" },
               ].map((stat, i) => (
-                <div key={i} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4 min-w-[150px]">
-                  <div className={`w-10 h-10 rounded-xl bg-${stat.color}-50 flex items-center justify-center text-${stat.color}-600`}>
-                    <stat.icon size={20} />
+                <div key={i} className="relative group overflow-hidden bg-white/5 backdrop-blur-md p-5 rounded-[2rem] border border-white/10 flex items-center gap-5 min-w-[180px] transition-all hover:bg-white/10">
+                   <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-50`} />
+                   <div className="relative z-10 w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white border border-white/10">
+                    <stat.icon size={22} className={stat.textColor} />
                   </div>
-                  <div>
-                    <p className="text-[10px] text-gray-500 uppercase font-bold">{stat.label}</p>
-                    <p className="text-lg font-bold text-gray-900">{stat.value}</p>
+                  <div className="relative z-10">
+                    <p className="text-[10px] text-white/40 uppercase font-black tracking-widest mb-1">{stat.label}</p>
+                    <p className="text-2xl font-black text-white">{stat.value}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+          <div className="bg-white/5 backdrop-blur-2xl rounded-[3rem] shadow-2xl overflow-hidden border border-white/10">
             <AdminTabs initialBookings={bookings} translations={translations} locale={locale} />
           </div>
         </div>
