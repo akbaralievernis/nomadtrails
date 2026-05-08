@@ -57,14 +57,14 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <Link href={`/${currentLocale}`} className="flex items-center gap-3 group">
-          <div className="w-11 h-11 flex items-center justify-center transition-transform group-hover:rotate-12">
-             <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 10L65 30H35L50 10Z" fill="#c9a84c"/>
-                <circle cx="50" cy="55" r="25" stroke="#c9a84c" strokeWidth="2"/>
-                <path d="M30 55C30 55 40 45 50 45C60 45 70 55 70 55" stroke="#c9a84c" strokeWidth="3"/>
-                <path d="M35 75L50 55L65 75" stroke={scrolled ? "#1a3d2b" : "#fff"} strokeWidth="4" strokeLinecap="round"/>
-             </svg>
+        <Link href={`/${currentLocale}`} className="flex items-center gap-4 group">
+          <div className="relative w-12 h-12 flex items-center justify-center transition-all duration-500 group-hover:scale-110">
+            <div className="absolute inset-0 bg-white/20 backdrop-blur-md rounded-2xl group-hover:rotate-6 transition-transform duration-500" />
+            <img 
+              src="/logo.png" 
+              alt="Logo" 
+              className="relative z-10 w-10 h-10 object-contain rounded-xl shadow-2xl" 
+            />
           </div>
           <div>
             <span className={`font-playfair font-extrabold text-xl transition-colors ${scrolled ? "text-[#0d1117]" : "text-white"}`}>{tc("site_name")}</span>

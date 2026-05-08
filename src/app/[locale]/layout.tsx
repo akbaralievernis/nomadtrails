@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   title: "NOMADTRAILS — Premium Kyrgyzstan Nomadic Tours",
   description:
     "Discover Kyrgyzstan's majestic mountains, authentic nomadic culture, and hidden trails. Premium nomadic experiences, yurt stays, and mountain expeditions.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/logo.png",
+  }
 };
 
 export function generateStaticParams() {
