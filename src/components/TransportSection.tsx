@@ -3,52 +3,90 @@ import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Canvas, useFrame } from "@react-three/fiber";
 import { Truck, Plane, FileText, Shield, ArrowRight } from "lucide-react";
-import * as THREE from "three";
+import "@/styles/globe.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Animated 3D Jeep-like vehicle (simplified box model)
-function JeepModel() {
-  const groupRef = useRef<THREE.Group>(null);
-  useFrame(({ clock }) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = clock.elapsedTime * 0.5;
-      groupRef.current.position.y = Math.sin(clock.elapsedTime * 0.8) * 0.1;
+// PerspectiveTransform Library Core
+const createPerspectiveTransform = (el: HTMLElement, w: number, h: number, useBackFacing: boolean = false) => {
+  const style = el.style;
+  const computedStyle = window.getComputedStyle(el);
+  const state = {
+    topLeft: { x: 0, y: 0 },
+    topRight: { x: w, y: 0 },
+    bottomLeft: { x: 0, y: h },
+    bottomRight: { x: w, y: h },
+  };
+
+  const stylePrefix = "webkitTransform" in style ? "webkit" : "MozTransform" in style ? "Moz" : "msTransform" in style ? "ms" : "";
+  const transformProperty = stylePrefix + (stylePrefix.length > 0 ? "Transform" : "transform");
+  const transformOriginProperty = "-" + stylePrefix.toLowerCase() + "-transform-origin";
+
+  const checkError = () => {
+    const pts = [state.topLeft, state.topRight, state.bottomLeft, state.bottomRight];
+    for (let i = 0; i < 4; i++) {
+      for (let j = i + 1; j < 4; j++) {
+        const dx = pts[i].x - pts[j].x;
+        const dy = pts[i].y - pts[j].y;
+        if (Math.sqrt(dx * dx + dy * dy) <= 1) return true;
+      }
     }
-  });
-  return (
-    <group ref={groupRef}>
-      {/* Body */}
-      <mesh position={[0, 0.3, 0]}>
-        <boxGeometry args={[2, 0.7, 1]} />
-        <meshStandardMaterial color="#1a3d2b" roughness={0.3} metalness={0.6} />
-      </mesh>
-      {/* Cabin */}
-      <mesh position={[0.1, 0.85, 0]}>
-        <boxGeometry args={[1.1, 0.55, 0.9]} />
-        <meshStandardMaterial color="#2d6a4f" roughness={0.3} metalness={0.5} />
-      </mesh>
-      {/* Wheels */}
-      {[[-0.75, -0.1, 0.55], [0.75, -0.1, 0.55], [-0.75, -0.1, -0.55], [0.75, -0.1, -0.55]].map((pos, i) => (
-        <mesh key={i} position={pos as [number, number, number]} rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.28, 0.28, 0.2, 16]} />
-          <meshStandardMaterial color="#0d1117" roughness={0.9} />
-        </mesh>
-      ))}
-      {/* Headlights */}
-      <mesh position={[1.02, 0.3, 0.3]}>
-        <boxGeometry args={[0.05, 0.15, 0.2]} />
-        <meshStandardMaterial color="#c9a84c" emissive="#c9a84c" emissiveIntensity={1} />
-      </mesh>
-      <mesh position={[1.02, 0.3, -0.3]}>
-        <boxGeometry args={[0.05, 0.15, 0.2]} />
-        <meshStandardMaterial color="#c9a84c" emissive="#c9a84c" emissiveIntensity={1} />
-      </mesh>
-    </group>
-  );
-}
+    return false;
+  };
+
+  const calc = () => {
+    const x = w, v = h;
+    let E = 0, D = 0;
+    const t = computedStyle.getPropertyValue(transformOriginProperty);
+    if (t.indexOf("px") > -1) {
+      const parts = t.split("px");
+      E = -parseFloat(parts[0]);
+      D = -parseFloat(parts[1]);
+    }
+
+    const G = [state.topLeft, state.topRight, state.bottomLeft, state.bottomRight];
+    const m = Array.from({ length: 8 }, () => new Float64Array(8));
+    const b = new Float64Array(8);
+
+    for (let i = 0; i < 4; i++) {
+      m[i][0] = m[i + 4][3] = i & 1 ? x + E : E;
+      m[i][1] = m[i + 4][4] = i > 1 ? v + D : D;
+      m[i][6] = (i & 1 ? -E - x : -E) * (G[i].x + E);
+      m[i][7] = (i > 1 ? -D - v : -D) * (G[i].x + E);
+      m[i + 4][6] = (i & 1 ? -E - x : -E) * (G[i].y + D);
+      m[i + 4][7] = (i > 1 ? -D - v : -D) * (G[i].y + D);
+      b[i] = G[i].x + E;
+      b[i + 4] = G[i].y + D;
+      m[i][2] = m[i + 4][5] = 1;
+    }
+
+    // Gaussian elimination
+    for (let i = 0; i < 8; i++) {
+      let max = i;
+      for (let j = i + 1; j < 8; j++) if (Math.abs(m[j][i]) > Math.abs(m[max][i])) max = j;
+      [m[i], m[max]] = [m[max], m[i]];
+      [b[i], b[max]] = [b[max], b[i]];
+      for (let j = i + 1; j < 8; j++) {
+        const factor = m[j][i] / m[i][i];
+        b[j] -= factor * b[i];
+        for (let k = i; k < 8; k++) m[j][k] -= factor * m[i][k];
+      }
+    }
+    const q = new Float64Array(8);
+    for (let i = 7; i >= 0; i--) {
+      let sum = 0;
+      for (let j = i + 1; j < 8; j++) sum += m[i][j] * q[j];
+      q[i] = (b[i] - sum) / m[i][i];
+    }
+
+    const matrix = `matrix3d(${q[0]},${q[3]},0,${q[6]},${q[1]},${q[4]},0,${q[7]},0,0,1,0,${q[2]},${q[5]},0,1)`;
+    // @ts-ignore
+    style[transformProperty] = matrix;
+  };
+
+  return { state, calc, checkError, style };
+};
 
 const CARDS = [
   { key: "jeep", icon: Truck, color: "#1a3d2b" },
@@ -61,70 +99,171 @@ export default function TransportSection() {
   const t = useTranslations("transport");
   const headRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLDivElement>(null);
+  const worldRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Animations
     gsap.fromTo(headRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.9, scrollTrigger: { trigger: headRef.current, start: "top 85%" } });
     if (cardsRef.current) {
       gsap.fromTo(cardsRef.current.children, { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.15, ease: "power3.out", scrollTrigger: { trigger: cardsRef.current, start: "top 80%" } });
     }
-    gsap.fromTo(canvasRef.current, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: canvasRef.current, start: "top 80%" } });
+
+    // Globe Logic
+    const URLS = {
+      bg: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/6043/css_globe_bg.jpg',
+      diffuse: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/6043/css_globe_diffuse.jpg',
+      halo: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/6043/css_globe_halo.png',
+    };
+
+    let config = { lat: 0, lng: 0, segX: 14, segY: 12, autoSpin: true };
+    let isMouseDown = false;
+    let dragX = 0, dragY = 0, dragLat = 0, dragLng = 0;
+    let globeDoms: any[] = [];
+    let vertices: any[] = [];
+    let tick = 0;
+
+    const container = worldRef.current;
+    if (!container) return;
+
+    const globeContainer = container.querySelector('.world-globe-doms-container') as HTMLElement;
+    const globePole = container.querySelector('.world-globe-pole') as HTMLElement;
+    const globeHalo = container.querySelector('.world-globe-halo') as HTMLElement;
+    const worldBg = container.querySelector('.world-bg') as HTMLElement;
+
+    worldBg.style.backgroundImage = `url(${URLS.bg})`;
+    globeHalo.style.backgroundImage = `url(${URLS.halo})`;
+
+    const segWidth = 1600 / config.segX | 0;
+    const segHeight = 800 / config.segY | 0;
+    const radius = 536 / 2;
+
+    const generate = () => {
+      vertices = [];
+      for (let y = 0; y <= config.segY; y++) {
+        let row = [];
+        for (let x = 0; x <= config.segX; x++) {
+          let u = x / config.segX;
+          let v = 0.05 + y / config.segY * 0.9;
+          row.push({
+            x: -radius * Math.cos(u * Math.PI * 2) * Math.sin(v * Math.PI),
+            y: -radius * Math.cos(v * Math.PI),
+            z: radius * Math.sin(u * Math.PI * 2) * Math.sin(v * Math.PI)
+          });
+        }
+        vertices.push(row);
+      }
+
+      for (let y = 0; y < config.segY; y++) {
+        for (let x = 0; x < config.segX; x++) {
+          const dom = document.createElement('div');
+          dom.style.position = 'absolute';
+          dom.style.width = segWidth + 'px';
+          dom.style.height = segHeight + 'px';
+          dom.style.backgroundImage = `url(${URLS.diffuse})`;
+          dom.style.backgroundPosition = `${-segWidth * x}px ${-segHeight * y}px`;
+          dom.style.transformOrigin = '0 0';
+          const pt = createPerspectiveTransform(dom, segWidth, segHeight);
+          globeDoms.push({ dom, pt, v1: vertices[y][x], v2: vertices[y][x+1], v3: vertices[y+1][x], v4: vertices[y+1][x+1] });
+          globeContainer.appendChild(dom);
+        }
+      }
+    };
+
+    generate();
+
+    const rotate = (v: any, sinRX: number, cosRX: number, sinRY: number, cosRY: number) => {
+      let x0 = v.x * cosRY - v.z * sinRY;
+      let z0 = v.z * cosRY + v.x * sinRY;
+      let y0 = v.y * cosRX - z0 * sinRX;
+      z0 = z0 * cosRX + v.y * sinRX;
+      let offset = 1 + (z0 / 4000);
+      v.px = x0 * offset;
+      v.py = y0 * offset;
+    };
+
+    const expand = (v1: any, v2: any) => {
+      let dx = v2.px - v1.px, dy = v2.py - v1.py;
+      let det = dx * dx + dy * dy;
+      if (det === 0) { v1.tx = v1.px; v1.ty = v1.py; v2.tx = v2.px; v2.ty = v2.py; return; }
+      let idet = 1.5 / Math.sqrt(det);
+      dx *= idet; dy *= idet;
+      v2.tx = v2.px + dx; v2.ty = v2.py + dy;
+      v1.tx = v1.px - dx; v1.ty = v1.py - dy;
+    };
+
+    const render = () => {
+      if (config.autoSpin && !isMouseDown) config.lng = (config.lng - 0.2 + 180) % 360 - 180;
+      let rX = config.lat / 180 * Math.PI;
+      let rY = (config.lng - 270) / 180 * Math.PI;
+      let sX = Math.sin(-rX), cX = Math.cos(-rX), sY = Math.sin(rY), cY = Math.cos(rY);
+
+      if (tick ^= 1) {
+        vertices.flat().forEach(v => rotate(v, sX, cX, sY, cY));
+        globeDoms.forEach(g => {
+          expand(g.v1, g.v2); expand(g.v2, g.v3); expand(g.v3, g.v4); expand(g.v4, g.v1);
+          g.pt.state.topLeft.x = g.v1.tx; g.pt.state.topLeft.y = g.v1.ty;
+          g.pt.state.topRight.x = g.v2.tx; g.pt.state.topRight.y = g.v2.ty;
+          g.pt.state.bottomLeft.x = g.v3.tx; g.pt.state.bottomLeft.y = g.v3.ty;
+          g.pt.state.bottomRight.x = g.v4.tx; g.pt.state.bottomRight.y = g.v4.ty;
+          if (!g.pt.checkError()) g.pt.calc();
+        });
+      }
+      requestAnimationFrame(render);
+    };
+
+    render();
+
+    const onDown = (e: any) => { isMouseDown = true; dragX = e.pageX; dragY = e.pageY; dragLat = config.lat; dragLng = config.lng; };
+    const onMove = (e: any) => { if (isMouseDown) { config.lat = Math.max(-90, Math.min(90, dragLat + (e.pageY - dragY) * 0.5)); config.lng = (dragLng - (e.pageX - dragX) * 0.5 + 180) % 360 - 180; } };
+    const onUp = () => isMouseDown = false;
+
+    container.addEventListener('mousedown', onDown);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+
+    return () => {
+      container.removeEventListener('mousedown', onDown);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
   }, []);
 
   return (
-    <section id="transport" className="section-padding" style={{ background: "#f8f9fa" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div ref={headRef} style={{ textAlign: "center", marginBottom: "4rem" }}>
+    <section id="transport" className="section-padding bg-slate-50">
+      <div className="max-w-7xl mx-auto px-6">
+        <div ref={headRef} className="text-center mb-16">
           <span className="section-badge">{t("title")}</span>
           <h2 className="section-title">{t("title")}</h2>
-          <p className="section-subtitle" style={{ margin: "0.75rem auto 0" }}>{t("subtitle")}</p>
+          <p className="section-subtitle">{t("subtitle")}</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Info Cards */}
-          <div ref={cardsRef} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div ref={cardsRef} className="space-y-6">
             {CARDS.map(({ key, icon: Icon, color }) => (
-              <div key={key} className="card-hover" style={{ display: "flex", gap: "1.25rem", background: "#fff", borderRadius: 16, padding: "clamp(1rem, 4vw, 1.5rem)", boxShadow: "0 4px 20px rgba(0,0,0,0.06)", border: "1px solid rgba(0,0,0,0.04)" }}>
-                <div style={{ width: 48, height: 48, borderRadius: 14, background: `${color}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <Icon size={22} color={color} />
+              <div key={key} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex gap-6 hover:shadow-xl transition-all duration-500">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${color}15` }}>
+                  <Icon size={24} color={color} />
                 </div>
-                <div style={{ flex: 1 }}>
-                  <h4 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.05rem", fontWeight: 700, color: "#0d1117", marginBottom: "0.35rem" }}>
-                    {t(`${key}_title` as "jeep_title" | "flight_title" | "visa_title" | "safety_title")}
-                  </h4>
-                  <p style={{ fontSize: "0.87rem", color: "#6c757d", lineHeight: 1.65, marginBottom: "0.6rem" }}>
-                    {t(`${key}_desc` as "jeep_desc" | "flight_desc" | "visa_desc" | "safety_desc")}
-                  </p>
-                  <a href="#booking-form" onClick={() => {
-                    const formElement = document.querySelector('select[name="item-select"]') as HTMLSelectElement;
-                    if (formElement) {
-                      const title = t(`${key}_title` as any);
-                      const option = Array.from(formElement.options).find(o => o.text === title);
-                      if (option) formElement.value = option.value;
-                      formElement.dispatchEvent(new Event('change', { bubbles: true }));
-                    }
-                  }} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", color: color, fontWeight: 700, fontSize: "0.8rem", textDecoration: "none" }}>
-                    {t("learn_more")} <ArrowRight size={12} />
+                <div>
+                  <h4 className="font-playfair font-bold text-xl mb-2">{t(`${key}_title` as any)}</h4>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-4">{t(`${key}_desc` as any)}</p>
+                  <a href="#booking" className="inline-flex items-center gap-2 font-bold text-xs uppercase tracking-widest" style={{ color }}>
+                    {t("learn_more")} <ArrowRight size={14} />
                   </a>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* 3D Jeep Canvas */}
-          <div ref={canvasRef} style={{ height: 420, borderRadius: 24, overflow: "hidden", background: "linear-gradient(135deg,#1a3d2b,#2d6a4f)", boxShadow: "0 20px 60px rgba(26,61,43,0.25)" }}>
-            <Canvas camera={{ position: [0, 1.5, 5], fov: 45 }}>
-              <ambientLight intensity={0.7} />
-              <directionalLight position={[5, 8, 5]} intensity={1.5} color="#c9a84c" />
-              <directionalLight position={[-5, 3, -2]} intensity={0.5} color="#40916c" />
-              <pointLight position={[0, 3, 0]} intensity={0.5} />
-              <JeepModel />
-              {/* Ground plane */}
-              <mesh position={[0, -0.42, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-                <planeGeometry args={[10, 10]} />
-                <meshStandardMaterial color="#152e1f" roughness={1} />
-              </mesh>
-            </Canvas>
+          <div className="world-container h-[500px] shadow-2xl relative" ref={worldRef}>
+             <div className="world">
+                <div className="world-bg"></div>
+                <div className="world-globe">
+                    <div className="world-globe-pole"></div>
+                    <div className="world-globe-doms-container"></div>
+                    <div className="world-globe-halo"></div>
+                </div>
+            </div>
           </div>
         </div>
       </div>
