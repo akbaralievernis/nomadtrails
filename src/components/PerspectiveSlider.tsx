@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import "@/styles/slider.css";
-
 import { useTranslations } from "next-intl";
+import "@/styles/slider.css";
 
 const IMAGES = [
   "/images/hero_forest.png",
@@ -14,39 +13,79 @@ const IMAGES = [
 
 const SLIDE_KEYS = ["forest", "lake", "cliffs", "mountains", "peaks"];
 
+function lerp({ x, y }: { x: number; y: number }, { x: targetX, y: targetY }: { x: number; y: number }) {
+  const fraction = 0.1;
+  x += (targetX - x) * fraction;
+  y += (targetY - y) * fraction;
+  return { x, y };
+}
+
 export default function PerspectiveSlider() {
   const t = useTranslations("hero.slider");
   const [activeId, setActiveId] = useState(1);
   const [prevId, setPrevId] = useState(1);
   const [inTransit, setInTransit] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [bgNext, setBgNext] = useState(false);
   const [isBackwards, setIsBackwards] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   const sliderRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  
   const lastPos = useRef({ x: 0, y: 0 });
   const targetPos = useRef({ x: 0, y: 0 });
   const animationFrame = useRef<number | null>(null);
+  const mouseWatched = useRef(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 650);
+      const bkp = 650;
+      const mobile = window.innerWidth <= bkp;
+      setIsMobile(mobile);
+      
+      if (!mobile && !mouseWatched.current) {
+        mouseWatched.current = true;
+        document.documentElement.style.setProperty("--img-prev", `url("${IMAGES[activeId - 1]}")`);
+      } else if (mobile && mouseWatched.current) {
+        mouseWatched.current = false;
+      }
     };
+
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    
+    // Auto-slide
+    let timer = setTimeout(autoSlide, 2000);
+    
+    function autoSlide() {
+      next();
+      timer = setTimeout(autoSlide, 5000);
+    }
 
-  const runAnimation = () => {
-    const fraction = 0.1;
-    lastPos.current.x += (targetPos.current.x - lastPos.current.x) * fraction;
-    lastPos.current.y += (targetPos.current.y - lastPos.current.y) * fraction;
+    const stopAutoSlide = () => clearTimeout(timer);
+    window.addEventListener("mousedown", stopAutoSlide);
+    window.addEventListener("touchstart", stopAutoSlide);
 
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timer);
+      window.removeEventListener("mousedown", stopAutoSlide);
+      window.removeEventListener("touchstart", stopAutoSlide);
+    };
+  }, [activeId, inTransit]);
+
+  const getCoefficients = (x: number, y: number) => {
     const halfW = window.innerWidth / 2;
     const halfH = window.innerHeight / 2;
-    const xCoeff = (lastPos.current.x - halfW) / halfW;
-    const yCoeff = (halfH - lastPos.current.y) / halfH;
+    return {
+      xCoeff: (x - halfW) / halfW,
+      yCoeff: (halfH - y) / halfH
+    };
+  };
+
+  const runAnimation = () => {
+    lastPos.current = lerp(lastPos.current, targetPos.current);
+    const { xCoeff, yCoeff } = getCoefficients(lastPos.current.x, lastPos.current.y);
 
     if (contentRef.current && !isMobile) {
       const maxX = 10;
@@ -56,11 +95,12 @@ export default function PerspectiveSlider() {
         rotateX(${maxY * yCoeff}deg)
         rotateY(${maxX * xCoeff}deg)
       `;
-    }
-
-    const activeImg = sliderRef.current?.querySelector(".slider__images-item--active img") as HTMLImageElement;
-    if (activeImg) {
-      activeImg.style.transform = `translateX(${-1 * xCoeff}em) translateY(${1 * yCoeff}em)`;
+      
+      // Position active image
+      const activeImg = sliderRef.current?.querySelector(".slider__images-item--active img") as HTMLImageElement;
+      if (activeImg) {
+        activeImg.style.transform = `translateX(${-xCoeff}em) translateY(${yCoeff}em)`;
+      }
     }
 
     const dist = Math.abs(lastPos.current.x - targetPos.current.x) + Math.abs(lastPos.current.y - targetPos.current.y);
@@ -84,31 +124,38 @@ export default function PerspectiveSlider() {
     setInTransit(true);
     setIsBackwards(true);
     
-    // Wait for text to slide out
+    // Transition text out
     setTimeout(() => {
       setIsBackwards(false);
       setPrevId(activeId);
       setActiveId(nextId);
-      
-      if (!isMobile) {
-        setBgNext(true);
-      }
+      document.documentElement.style.setProperty("--from-left", nextId.toString());
 
-      // Finish transition
-      setTimeout(() => {
+      if (!isMobile) {
+        const imageUrl = `url("${IMAGES[nextId - 1]}")`;
+        document.documentElement.style.setProperty("--img-next", imageUrl);
+        setBgNext(true);
+        
+        setTimeout(() => {
+          document.documentElement.style.setProperty("--img-prev", imageUrl);
+          setBgNext(false);
+          setInTransit(false);
+        }, 700);
+      } else {
         setInTransit(false);
-        setBgNext(false);
-      }, 700);
-    }, 350);
+      }
+    }, 700);
   };
 
-  const next = () => startTransition(activeId === IMAGES.length ? 1 : activeId + 1);
-  const prev = () => startTransition(activeId === 1 ? IMAGES.length : activeId - 1);
+  const next = () => {
+    const nextId = activeId === IMAGES.length ? 1 : activeId + 1;
+    startTransition(nextId);
+  };
 
-  useEffect(() => {
-    let timer = setTimeout(next, 5000);
-    return () => clearTimeout(timer);
-  }, [activeId, inTransit]);
+  const prev = () => {
+    const nextId = activeId === 1 ? IMAGES.length : activeId - 1;
+    startTransition(nextId);
+  };
 
   return (
     <div 
@@ -116,11 +163,6 @@ export default function PerspectiveSlider() {
       ref={sliderRef}
       className={`slider-container ${bgNext ? "slider--bg-next" : ""}`}
       onMouseMove={onMouseMove}
-      style={{
-        "--img-prev": `url("${IMAGES[prevId - 1]}")`,
-        "--img-next": `url("${IMAGES[activeId - 1]}")`,
-        "--from-left": activeId
-      } as any}
     >
       <div id="slider-content" ref={contentRef} className="slider__content">
         <div className="slider__images">
@@ -134,14 +176,12 @@ export default function PerspectiveSlider() {
               className += " slider__images-item--transit";
               if (id === activeId) {
                 className += activeId > prevId ? " slider__images-item--next" : " slider__images-item--prev";
-              } else if (id === prevId) {
-                className += activeId > prevId ? " slider__images-item--prev" : " slider__images-item--next";
               }
             }
 
             return (
               <div key={i} className={className} data-id={id}>
-                <img src={src} alt="" crossOrigin="anonymous" />
+                <img src={src} alt="" />
               </div>
             );
           })}
@@ -152,7 +192,7 @@ export default function PerspectiveSlider() {
             const id = i + 1;
             let className = "slider__text-item";
             if (id === activeId && !inTransit) className += " slider__text-item--active";
-            if (id === activeId && isBackwards) className += " slider__text-item--backwards";
+            if (id === prevId && isBackwards) className += " slider__text-item--backwards";
             
             return (
               <div key={i} className={className} data-id={id}>
