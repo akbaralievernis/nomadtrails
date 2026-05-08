@@ -11,9 +11,9 @@ import * as THREE from "three";
 gsap.registerPlugin(ScrollTrigger);
 
 const URLS = {
-  bg: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/6043/css_globe_bg.jpg',
-  diffuse: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/6043/css_globe_diffuse.jpg',
-  halo: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/6043/css_globe_halo.png',
+  bg: '/images/globe/bg.jpg',
+  diffuse: '/images/globe/diffuse.jpg',
+  halo: '/images/globe/halo.png',
 };
 
 function RealisticGlobe() {
@@ -32,20 +32,20 @@ function RealisticGlobe() {
       {/* The Earth */}
       <mesh>
         <sphereGeometry args={[2.2, 64, 64]} />
-        <meshStandardMaterial 
-          map={texture} 
-          roughness={0.8} 
-          metalness={0.2} 
+        <meshStandardMaterial
+          map={texture}
+          roughness={0.8}
+          metalness={0.2}
         />
       </mesh>
 
       {/* The Halo (Atmosphere) */}
       <mesh scale={[1.4, 1.4, 1]} position={[0, 0, 0.1]}>
         <planeGeometry args={[5, 5]} />
-        <meshBasicMaterial 
-          map={haloTexture} 
-          transparent 
-          blending={THREE.AdditiveBlending} 
+        <meshBasicMaterial
+          map={haloTexture}
+          transparent
+          blending={THREE.AdditiveBlending}
           depthWrite={false}
           opacity={0.8}
         />
@@ -104,11 +104,11 @@ export default function TransportSection() {
 
           <div ref={canvasRef} className="relative h-[600px] w-full rounded-[3rem] overflow-hidden shadow-2xl bg-black">
             {/* Background Image Layer */}
-            <div 
+            <div
               className="absolute inset-0 opacity-40 bg-cover bg-center"
               style={{ backgroundImage: `url(${URLS.bg})` }}
             />
-            
+
             <Canvas camera={{ position: [0, 0, 8], fov: 40 }}>
               <ambientLight intensity={0.5} />
               <pointLight position={[10, 10, 10]} intensity={1.5} color="#c9a84c" />
